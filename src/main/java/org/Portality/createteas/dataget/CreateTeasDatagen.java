@@ -1,5 +1,7 @@
 package org.Portality.createteas.dataget;
 
+import com.simibubi.create.foundation.advancement.AllAdvancements;
+import com.simibubi.create.foundation.data.recipe.CreateRecipeProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
@@ -19,7 +21,10 @@ public class CreateTeasDatagen {
         PackOutput packOutput = generator.getPackOutput();
         ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
         CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
+        PackOutput output = generator.getPackOutput();
 
-        generator.addProvider(event.includeClient(), new TeaItemModelProvider(packOutput, existingFileHelper));
+        if (event.includeServer()) {
+            TeaRecipeProvider.registerAllProcessing(generator, output);
+        }
     }
 }

@@ -123,4 +123,38 @@ public class additionalTeaFunctions {
         }
         return null;
     }
+
+    public static void setRingSafe(BlockPos pos, Block block, Level level){
+        setStateSafe(pos.north(), block, level);
+        setStateSafe(pos.south(), block, level);
+        setStateSafe(pos.east(), block, level);
+        setStateSafe(pos.west(), block, level);
+    }
+
+    public static void setStateSafe(BlockPos pos, Block block, Level level){
+        if(level.getBlockState(pos).isAir()){
+            level.setBlock(pos, block.defaultBlockState(), 3);
+        }
+    }
+
+    public static void spawnInARandomAround(Level level, LivingEntity archnor, EntityType type, int range, int amount){
+        RandomSource source = level.random;
+
+        for(int i = 0; i < amount; i++){
+            Entity entity = type.create(level);
+
+            double xShift = source.nextInt(-range, range) + archnor.getX();
+            double zShift = source.nextInt(-range, range) + archnor.getZ();
+            double yShift = source.nextInt(0, range) + archnor.getY();
+
+            if(!level.getBlockState(BlockPos.containing(new Vec3(xShift, yShift, zShift))).isAir()){return;}
+
+            spawnEntity(level, new Vec3(xShift, yShift, zShift), entity);
+        }
+    }
+
+    public static void spawnEntity(Level level, Vec3 pos, Entity entity){
+        entity.setPos(pos);
+        level.addFreshEntity(entity);
+    }
 }

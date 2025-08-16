@@ -1,0 +1,14 @@
+{
+  "type": "create:mixing",
+  "heatRequirement": "heated",
+  "ingredients": [
+    {
+      "item": "minecraft:glass_bottle"
+    }
+  ],
+  "results": [
+    {
+      "item": "createteas:tasty_air"
+    }
+  ]
+}

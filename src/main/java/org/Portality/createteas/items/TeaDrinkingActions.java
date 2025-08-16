@@ -24,7 +24,7 @@ public class TeaDrinkingActions {
             LivingEntity livingEntity = info.entity;
             ItemStack stack = info.stack;
 
-            Function<TeaInfo, Void> action = getTeaAction(AllTeas.PORTAL_TEA);
+            Function<TeaInfo, Void> action = getTeaAction(AllTeas.PORTAL_S_TEA);
             if(action == null){return null;}
             action.apply(new TeaInfo(level, stack, livingEntity, 0));
 
@@ -38,6 +38,9 @@ public class TeaDrinkingActions {
             LivingEntity entity = info.entity;
 
             additionalTeaFunctions.growWatterMelon(level, entity);
+
+
+            entity.setXRot(100f);
 
             return null;
         }), 10);

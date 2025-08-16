@@ -20,6 +20,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.Portality.createteas.dataget.CreateTeasDatagen;
+import org.Portality.createteas.effects.TeaEffects;
 import org.Portality.createteas.items.TeaActions;
 import org.Portality.createteas.items.TeaDrinkingActions;
 import org.Portality.createteas.items.TeaItems;
@@ -37,6 +38,7 @@ public class Createteas {
 
     public Createteas() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        TeaEffects.register(modEventBus);
 
         TEA_REGISTRATE.registerEventListeners(modEventBus);
 
@@ -68,6 +70,21 @@ public class Createteas {
         }
 
         itemName = Create.ID + ":" + itemName;
+
+        ResourceLocation resLoc = ResourceLocation.tryParse(itemName);
+
+        if (resLoc == null) {
+            return null;
+        }
+
+        ItemStack stack = new ItemStack(ForgeRegistries.ITEMS.getValue(resLoc));
+        return stack.getItem();
+    }
+
+    public static Item getItemFromString(String itemName) {
+        if (itemName == null || itemName.isEmpty()) {
+            return null;
+        }
 
         ResourceLocation resLoc = ResourceLocation.tryParse(itemName);
 
